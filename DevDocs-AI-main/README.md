@@ -4,8 +4,6 @@
 
 **Intelligent search engine for programming documentation that actually understands context.**
 
-[![Demo Video](https://img.shields.io/badge/▶️-Watch%20Demo-red)](https://drive.google.com/file/d/1QPj6KEPBpBVmQQOgGE2h05HTXMM2fQwC/view?usp=drive_link) 
-
 > 🎯 **What makes this different:** Metadata-based re-ranking that boosts relevant results by 15%. When you ask for code examples, it prioritizes chunks containing actual code. Ask about APIs, and API documentation ranks higher.
 
 ---
@@ -153,9 +151,6 @@ The LLM only uses retrieved context - no hallucinations. If it doesn't know, it 
 
 ---
 
-## 🎬 Demo
-
-**Video:** [5-minute walkthrough](https://drive.google.com/file/d/1QPj6KEPBpBVmQQOgGE2h05HTXMM2fQwC/view?usp=drive_link)
 
 **Screenshots:**
 
@@ -440,15 +435,6 @@ pip install -r requirements.txt
 ## 📄 License
 
 MIT - feel free to use this for your own projects.
-
----
-
-## 👤 Contact
-
-**Built by:** [Adish Karthik]  
-**GitHub:** [https://github.com/Adish1010]  
-**Email:** [adish.kaarthik@gmail.com]  
-**LinkedIn:** [https://www.linkedin.com/in/adish-karthik]
 
 ---
 
