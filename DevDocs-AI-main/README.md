@@ -1,10 +1,20 @@
-# DevDocs AI
+# KnowledgeBase RAG
 
 **Knowledge Base Search Engine**
 
 **Intelligent search engine for programming documentation that actually understands context.**
 
 > 🎯 **What makes this different:** Metadata-based re-ranking that boosts relevant results by 15%. When you ask for code examples, it prioritizes chunks containing actual code. Ask about APIs, and API documentation ranks higher.
+
+---
+
+## 🎥 Demo Video
+
+Watch the demo video here: [Demo Video](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=sharing)
+
+Or with a clickable thumbnail:
+
+[![Watch Demo](https://img.icons8.com/color/96/000000/video.png)](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=sharing)
 
 ---
 
@@ -30,7 +40,6 @@ python src/api.py
 
 # 6. Start the frontend (Terminal 2 - new terminal)
 streamlit run app.py
-```
 
 **Open:** http://localhost:8501 → Upload a PDF → Ask questions → Get answers with citations!
 
@@ -399,25 +408,6 @@ python src/api.py
 source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
-
-**PDF upload error: missing pypdf**
-
-If you see an error like:
-
-```
-Document processing failed: Failed to load document: pypdf package not found, please install it with pip install pypdf
-```
-
-Install the `pypdf` package in your virtual environment and retry:
-
-```bash
-venv\Scripts\activate   # on Windows
-pip install pypdf
-# or install everything
-pip install -r requirements.txt
-```
-
-This repository's `requirements.txt` already includes `pypdf` so a full install will resolve the dependency.
 
 ---
 
