@@ -1,10 +1,20 @@
-# DevDocs AI
+# KnowledgeBase RAG
 
 **Knowledge Base Search Engine**
 
 **Intelligent search engine for programming documentation that actually understands context.**
 
 > 🎯 **What makes this different:** Metadata-based re-ranking that boosts relevant results by 15%. When you ask for code examples, it prioritizes chunks containing actual code. Ask about APIs, and API documentation ranks higher.
+
+---
+
+## 🎥 Demo Video
+
+Watch the demo video here: [Demo Video]([https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=drive_link))
+
+Or with a clickable thumbnail:
+
+[![Watch Demo]([https://img.icons8.com/color/96/000000/video.png)](https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=drive_link))
 
 ---
 
@@ -30,7 +40,7 @@ python src/api.py
 
 # 6. Start the frontend (Terminal 2 - new terminal)
 streamlit run app.py
-```
+
 
 **Open:** http://localhost:8501 → Upload a PDF → Ask questions → Get answers with citations!
 
