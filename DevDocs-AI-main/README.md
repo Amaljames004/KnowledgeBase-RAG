@@ -12,7 +12,7 @@
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Adish1010/DevDocs-AI.git
+git clone https://github.com/Amaljames004/KnowledgeBase-RAG.git
 cd devdocs-ai
 
 # 2. Create virtual environment
