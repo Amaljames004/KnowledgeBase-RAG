@@ -18,8 +18,8 @@ API_BASE_URL = "http://localhost:8000"
 
 # Page config
 st.set_page_config(
-    page_title="DevDocs AI",
-    page_icon="📚",
+    page_title="KnowledgeBase RAG",
+    page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -28,13 +28,13 @@ st.set_page_config(
 st.markdown("""
 <style>
     .main-header {
-        font-size: 3rem;
-        font-weight: bold;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        font-size: 3.2rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #00b4d8 0%, #0077b6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
     }
     .sub-header {
         text-align: center;
@@ -43,7 +43,7 @@ st.markdown("""
         margin-bottom: 2rem;
     }
     .metric-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
         padding: 1.5rem;
         border-radius: 10px;
         color: white;
@@ -70,7 +70,7 @@ st.markdown("""
     }
     .stButton>button {
         width: 100%;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(90deg, #00b4d8 0%, #0077b6 100%);
         color: white;
         border: none;
         padding: 0.75rem;
@@ -234,9 +234,9 @@ if "error_message" not in st.session_state:
 # ---------------------------------------------------------------------------
 def main():
     # Header
-    st.markdown('<div class="main-header">📚 DevDocs AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">🧠 KnowledgeBase RAG</div>', unsafe_allow_html=True)
     st.markdown(
-        '<div class="sub-header">Intelligent Programming Documentation Search Engine</div>',
+        '<div class="sub-header">Search and summarize your documentation with RAG-powered AI</div>',
         unsafe_allow_html=True
     )
     
@@ -250,7 +250,7 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.title("⚙️ Control Panel")
+        st.title("⚙️ KnowledgeBase Controls")
         
         # API Status
         st.subheader("📊 System Status")
