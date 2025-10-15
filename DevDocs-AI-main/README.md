@@ -13,7 +13,7 @@
 ```bash
 # 1. Clone the repository
 git clone https://github.com/Amaljames004/KnowledgeBase-RAG.git
-cd devdocs-ai
+cd DevDocs-AI-main
 
 # 2. Create virtual environment
 python -m venv venv
