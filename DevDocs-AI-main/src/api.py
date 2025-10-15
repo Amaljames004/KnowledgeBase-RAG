@@ -21,6 +21,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import core components
 from src.document_processor import DocumentProcessor, DocumentProcessingError
+from src.rag_engine import RAGEngineError, GenerationError, RetrievalError
 from src.rag_engine import create_rag_engine
 
 from config import (
@@ -292,20 +293,20 @@ async def query_knowledge_base(request: QueryRequest):
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="RAG engine not initialized"
             )
-        
+
         if not request.question.strip():
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Question cannot be empty"
             )
-        
+
         logger.info(f"Query: {request.question}")
-        
+
         # Process query
         start_time = time.time()
         result = rag_engine.query(request.question, request.filters)
         processing_time = (time.time() - start_time) * 1000
-        
+
         response = QueryResponse(
             question=result["question"],
             answer=result["answer"],
@@ -314,13 +315,34 @@ async def query_knowledge_base(request: QueryRequest):
             chunks_used=result["chunks_used"],
             processing_time_ms=round(processing_time, 2)
         )
-        
+
         logger.info(f"✅ Query completed: {processing_time:.0f}ms, confidence: {result['confidence']}")
-        
+
         return response
-        
+
     except HTTPException:
         raise
+    except GenerationError as e:
+        # LLM generation failures (e.g., missing API key)
+        logger.error(f"GenerationError: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Generation failed: {e}. Check GROQ_API_KEY and model availability."
+        )
+    except RetrievalError as e:
+        # Retrieval/search layer failed
+        logger.error(f"RetrievalError: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Retrieval failed: {e}. Check vector DB and embedding model."
+        )
+    except RAGEngineError as e:
+        # Generic engine error
+        logger.exception(f"RAG engine error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"RAG engine error: {e}"
+        )
     except Exception as e:
         logger.exception(f"Query failed: {e}")
         raise HTTPException(

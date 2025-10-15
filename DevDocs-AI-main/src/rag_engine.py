@@ -391,9 +391,32 @@ class RAGEngine:
         Returns:
             Generated answer with metadata
         """
+        # If LLM client is not available, return a retrieval-only summary
         if not self.llm_client:
-            raise GenerationError("LLM client not initialized - check GROQ_API_KEY")
-            
+            logger.warning("LLM client not initialized - returning retrieval-only response")
+            # Build a deterministic summary from context chunks (concatenate previews)
+            preview_texts = []
+            for i, c in enumerate(context_chunks, 1):
+                preview = c.get("content", "")[:400]
+                preview_texts.append(f"(Source {i}) {preview}")
+
+            answer = (
+                "LLM generation is disabled (missing GROQ_API_KEY). \n"
+                "Here is a retrieval-only summary based on the most relevant chunks:\n\n"
+                + "\n\n".join(preview_texts)
+            )
+
+            confidence = self._calculate_confidence(context_chunks)
+            sources = self._extract_sources(context_chunks)
+
+            return {
+                "answer": answer,
+                "sources": sources,
+                "confidence": confidence,
+                "chunks_used": len(context_chunks),
+                "model": "retrieval-only",
+                "generation_time_ms": 0
+            }
         if not context_chunks:
             return self._handle_no_context(query)
         

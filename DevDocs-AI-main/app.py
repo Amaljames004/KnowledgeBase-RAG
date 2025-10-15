@@ -138,7 +138,22 @@ def query_knowledge_base(question: str, filters: Optional[Dict] = None) -> Dict[
         if response.status_code == 200:
             return {"success": True, "data": response.json()}
         else:
-            return {"success": False, "error": response.json().get("detail", "Query failed")}
+            # Try to extract structured error information
+            err = None
+            raw = None
+            try:
+                raw_json = response.json()
+                err = raw_json.get("detail") or raw_json.get("error") or str(raw_json)
+            except Exception:
+                raw = response.text
+                err = raw
+
+            return {
+                "success": False,
+                "error": err or "Query failed",
+                "status": response.status_code,
+                "raw": raw or None
+            }
     except Exception as e:
         return {"success": False, "error": str(e)}
 
@@ -227,6 +242,9 @@ if "current_filters" not in st.session_state:
 # Initialize state for error messages
 if "error_message" not in st.session_state:
     st.session_state.error_message = None
+# Initialize query_input so widgets don't raise modification errors
+if "query_input" not in st.session_state:
+    st.session_state.query_input = ""
 
 
 # ---------------------------------------------------------------------------
@@ -362,10 +380,18 @@ def main():
         example_cols = st.columns(len(examples))
         
         # Ensure correct key name is used when setting state for example buttons
+        # callback to set example query into session state
+        def _set_example(val: str):
+            st.session_state.query_input = val
+
         for idx, (col, example) in enumerate(zip(example_cols, examples)):
             with col:
-                if st.button(f"💡 {example[:30]}...", key=f"example_{idx}"):
-                    st.session_state.query_input = example
+                st.button(
+                    f"💡 {example[:30]}...",
+                    key=f"example_{idx}",
+                    on_click=_set_example,
+                    args=(example,)
+                )
         
         # Query input
         st.text_area(
@@ -385,17 +411,33 @@ def main():
                 on_click=handle_query_search
             )
         with col2:
-            clear_button = st.button("🗑️ Clear", use_container_width=True)
-        
-        if clear_button:
-            st.session_state.query_input = ""
-            st.session_state.last_result = None
-            st.session_state.error_message = None # Clear any pending error
-            st.rerun()
+            # Clear button uses a callback to safely modify session_state
+            def _clear_search():
+                st.session_state.query_input = ""
+                st.session_state.last_result = None
+                st.session_state.error_message = None
+                st.rerun()
+
+            st.button("🗑️ Clear", use_container_width=True, on_click=_clear_search)
         
         # --- DISPLAY ERROR IF PRESENT ---
         if st.session_state.error_message:
-            st.error(st.session_state.error_message)
+            err = st.session_state.error_message
+            # If the error is a dict returned from query_knowledge_base, show details
+            if isinstance(err, dict):
+                message = err.get("error") or str(err)
+                status = err.get("status")
+                raw = err.get("raw")
+                if status:
+                    st.error(f"❌ Query failed ({status}): {message}")
+                else:
+                    st.error(f"❌ Query failed: {message}")
+
+                if raw:
+                    with st.expander("Raw response"):
+                        st.text(raw)
+            else:
+                st.error(err)
         
         # The main logic to display results now relies entirely on session state
         if st.session_state.last_result:
