@@ -12,7 +12,15 @@ from typing import List, Dict, Any, Optional
 from pathlib import Path
 
 # LangChain imports
-from langchain_community.document_loaders import PyPDFLoader, TextLoader
+try:
+    # PyPDF (used by LangChain's PyPDFLoader) may not be installed in some environments
+    from langchain_community.document_loaders import PyPDFLoader, TextLoader
+    _PYPDF_AVAILABLE = True
+except Exception as e:
+    # Don't crash on import; handle at runtime with a helpful error
+    _PYPDF_AVAILABLE = False
+    PyPDFLoader = None
+    from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 
@@ -142,6 +150,11 @@ class DocumentProcessor:
 
         try:
             if file_extension == ".pdf":
+                if not _PYPDF_AVAILABLE or PyPDFLoader is None:
+                    raise DocumentProcessingError(
+                        "pypdf is not installed. Please install it with `pip install pypdf` to process PDF files."
+                    )
+
                 loader = PyPDFLoader(file_path)
             elif file_extension == ".txt":
                 loader = TextLoader(file_path, encoding="utf-8")

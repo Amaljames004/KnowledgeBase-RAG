@@ -5,7 +5,7 @@ python-dotenv==1.0.0
 python-multipart==0.0.6
 
 # Document Processing
-pypdf2==3.0.1
+pypdf
 pdfplumber==0.10.3
 
 # LangChain

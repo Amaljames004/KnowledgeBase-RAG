@@ -400,6 +400,25 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
+**PDF upload error: missing pypdf**
+
+If you see an error like:
+
+```
+Document processing failed: Failed to load document: pypdf package not found, please install it with pip install pypdf
+```
+
+Install the `pypdf` package in your virtual environment and retry:
+
+```bash
+venv\Scripts\activate   # on Windows
+pip install pypdf
+# or install everything
+pip install -r requirements.txt
+```
+
+This repository's `requirements.txt` already includes `pypdf` so a full install will resolve the dependency.
+
 ---
 
 ## 🎓 What I Learned

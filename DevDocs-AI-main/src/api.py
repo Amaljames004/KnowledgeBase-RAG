@@ -20,7 +20,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import core components
-from src.document_processor import DocumentProcessor
+from src.document_processor import DocumentProcessor, DocumentProcessingError
 from src.rag_engine import create_rag_engine
 
 from config import (
@@ -254,6 +254,21 @@ async def upload_document(
                 
     except HTTPException:
         raise
+    except DocumentProcessingError as e:
+        # Known document processing failure (e.g., missing dependency like pypdf)
+        logger.error(f"Document processing error for {doc_name}: {e}")
+        detail_msg = str(e)
+        # If it's the common missing pypdf case, include an explicit install suggestion
+        if "pypdf" in detail_msg.lower():
+            detail_msg = (
+                f"{detail_msg} — please install the dependency by running `pip install pypdf` "
+                f"or `pip install -r requirements.txt` in your project's virtual environment."
+            )
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Document processing failed: {detail_msg}"
+        )
     except Exception as e:
         logger.exception(f"Upload failed: {e}")
         raise HTTPException(
