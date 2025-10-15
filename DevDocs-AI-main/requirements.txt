@@ -1,0 +1,29 @@
+# Core Dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-dotenv==1.0.0
+python-multipart==0.0.6
+
+# Document Processing
+pypdf2==3.0.1
+pdfplumber==0.10.3
+
+# LangChain
+# LangChain
+langchain==0.2.3
+langchain-community==0.2.4
+
+# RAG & Embeddings
+sentence-transformers==5.1.1
+chromadb==0.4.18
+
+# LLM
+groq==0.4.1
+
+# Frontend
+streamlit==1.29.0
+
+# Utilities
+pandas==2.1.4
+numpy==1.26.2
+tqdm==4.66.1

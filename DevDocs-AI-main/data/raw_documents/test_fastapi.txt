@@ -1,0 +1,26 @@
+
+# FastAPI Documentation
+
+## Quick Start
+To create a FastAPI application, first install the package:
+pip install fastapi uvicorn
+
+## Basic Example
+Here's a simple FastAPI application:
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: str = None):
+    return {"item_id": item_id, "q": q}
+
+## Important Notes
+- FastAPI requires Python 3.7+
+- Automatic API docs available at /docs and /redoc
+- Built-in data validation using Pydantic
