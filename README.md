@@ -10,11 +10,11 @@
 
 ## 🎥 Demo Video
 
-Watch the demo video here: [Demo Video]([https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=drive_link))
+Watch the demo video here: [Demo Video](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=sharing)
 
 Or with a clickable thumbnail:
 
-[![Watch Demo]([https://img.icons8.com/color/96/000000/video.png)](https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=drive_link))
+[![Watch Demo](https://img.icons8.com/color/96/000000/video.png)](https://drive.google.com/file/d/1iMIcdaXWTnCori8OT_VxmbAYWJafkFoq/view?usp=sharing)
 
 ---
 
@@ -40,7 +40,6 @@ python src/api.py
 
 # 6. Start the frontend (Terminal 2 - new terminal)
 streamlit run app.py
-
 
 **Open:** http://localhost:8501 → Upload a PDF → Ask questions → Get answers with citations!
 
